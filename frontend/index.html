@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Crypto price example</h1>
+    <p id="price">Loading...</p>
+    <script>
+      const ws = new WebSocket("ws://localhost:8080");
+
+      ws.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+
+        if (msg.type === "btc_price") {
+          document.getElementById(
+            "price"
+          ).textContent = `${msg.data.price} USD @ ${msg.data.timestamp}`;
+        }
+      };
+    </script>
+  </body>
+</html>
